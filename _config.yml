@@ -1,0 +1,8 @@
+excerpt_separator: ""
+pygments: true
+markdown: kramdown
+url: http://adamhathcock.github.io
+title: Adam Hathcock
+tagline: What I do
+description: My awesome new site
+paginate: 5
