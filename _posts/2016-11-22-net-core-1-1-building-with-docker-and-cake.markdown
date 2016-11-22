@@ -4,8 +4,6 @@ title:  .NET Core 1.1 building with Docker and Cake
 layout: post
 tags: [dotnetcore, cake, docker]
 ---
-# .NET Core 1.1 building with Docker and Cake
-
 I'm going to attempt to catalog how I'm using Docker to test and build containers that are for deployment into Amazon ECS.
 
 ## Build Process
@@ -27,6 +25,7 @@ I'm going to attempt to catalog how I'm using Docker to test and build container
 I love [Cake](http://cakebuild.net/) and have contributed some minor things to it.  It does support .NET Core.  However, the `nuget.exe` used to drive some critical things like `nuget push` does not.  `push` is actually the only command I need that isn't on .NET Core.  So I standardized on requiring Mono for just the build container.
 
 My base Cake file: `build.cake`
+
 ```
 var target = Argument("target", "Default");
 var tag = Argument("tag", "cake");
@@ -75,6 +74,7 @@ Task("Default")
 
 RunTarget(target);
 ```
+
 I broke out all the steps as I often run Cake for each step during development.  You'll notice that each `dotnet` command behaves differently.  It's very annoying.
 
 I have a project structure that usually goes like this:
