@@ -4,9 +4,20 @@ title:  .NET Core 1.1 building with Docker and Cake
 layout: post
 tags: [dotnetcore, cake, docker]
 ---
+---
+title: docker-dotnet-cake
+date: 2016-11-22 15:04:18
+tags:
+  - dotnetcore 
+  - cake
+  - docker
+---
+# .NET Core 1.1 building with Docker and Cake
+
 I'm going to attempt to catalog how I'm using Docker to test and build containers that are for deployment into Amazon ECS.
 
 ## Build Process
+
 1. Use `Dockerfile.build`
     - Uses Cake:
         1. `dotnet restore`
@@ -25,7 +36,6 @@ I'm going to attempt to catalog how I'm using Docker to test and build container
 I love [Cake](http://cakebuild.net/) and have contributed some minor things to it.  It does support .NET Core.  However, the `nuget.exe` used to drive some critical things like `nuget push` does not.  `push` is actually the only command I need that isn't on .NET Core.  So I standardized on requiring Mono for just the build container.
 
 My base Cake file: `build.cake`
-
 ```
 var target = Argument("target", "Default");
 var tag = Argument("tag", "cake");
@@ -78,12 +88,14 @@ RunTarget(target);
 I broke out all the steps as I often run Cake for each step during development.  You'll notice that each `dotnet` command behaves differently.  It's very annoying.
 
 I have a project structure that usually goes like this:
+
 - `src` - Source files
 - `test` - Unit tests for those source files
 - `integrate` - Integration tests that should run separately from unit tests.
 - `misc` - Other code stuff
 
 Other things to notice:
+
 - `Default` is test.  Don't want to accidently publish
 - `publish` has a hard-coded entry point.  Probably should make that argument.
 - `tag` is a tag I want to tag the published build with.  I want to see something unique for each publish.  I default this with `cake` for local publishes.
@@ -110,6 +122,7 @@ Notice the source image: [cl0sey/dotnet-mono-docker:1.1-sdk](https://hub.docker.
 Someone was nice enough to already make a Docker image with Mono on top of the base `microsoft/dotnet:1.1-sdk-projectjson` image.  The SDK image is what is needed for using all of the `dotnet cli` commands that aren't just running.
 
 Notice:
+
 - `ARG` and `ENV` declarations for specifying the `tag` variable.  I think `ARG` declares it and `ENV` allows it to be used as a `bash`-like variable.
 - creating a `publish` directory.
 - How I pass the `tag` variable to the `Cake` script.
@@ -130,6 +143,7 @@ ENTRYPOINT ["dotnet", "Server.dll"]
 ```
 
 Notice:
+
 - I actually use the official runtime image.
 - `COPY` command to grab the local `publish` directory and put it in the `app` directory inside the container.
 - I keep the default 5000 port.  Why not?  It's all hidden in AWS.
@@ -164,7 +178,9 @@ deployment:
     - docker tag server-api:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/server-api:$CIRCLE_BUILD_NUM
     - ./push.sh
 ```
+
 Notice:
+
 - `test` phase
     - The `test` phase does `docker build` on `Dockerfile.build`  This file does everything, including publish. The image is tagged as `build-image`.
     - `test` phase also creates a container called `build-cont` for possible deployment.
@@ -178,6 +194,7 @@ Notice:
     - `push.sh` actually does the push to AWS.
 
 ## push.sh to AWS ECS 
+
 Finally, I want to save my Docker image.
 
 ```
