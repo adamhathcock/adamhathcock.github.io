@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title:  .NET Core 1.1 building with Docker and Cake
 layout: post
 tags: [dotnetcore, cake, docker]
