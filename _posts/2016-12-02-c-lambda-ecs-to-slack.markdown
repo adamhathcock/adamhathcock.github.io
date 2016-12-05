@@ -3,8 +3,6 @@ published: true
 title: C# Lambda: ECS to slack!
 layout: post
 ---
-## Hello dotnet Lambda ##
-
 I created a C# AWS Lambda for fun.  I didn't like reading node.js javascript for something similar so I decided to try the new C# Lambda.  Hopefully, this is a good sample for others.
 
 Code is all here: [Visibility.Lambda.Slack repo](https://github.com/Visibilityltd/Visibility.Lambda.Slack)
