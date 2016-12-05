@@ -1,6 +1,6 @@
 ---
 published: true
-title: C# Lambda - ECS to slack
+title: C# Lambdas for ECS Alerts
 layout: post
 ---
 I created a C# AWS Lambda for fun.  I didn't like reading node.js javascript for something similar so I decided to try the new C# Lambda.  Hopefully, this is a good sample for others.
