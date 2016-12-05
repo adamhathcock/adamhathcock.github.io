@@ -1,6 +1,6 @@
 ---
 published: true
-title: DistributedCache extensions for Data Protection
+title: DistributedCache extensions for Data Protection in ASP.NET Core
 layout: post
 ---
 [Repo: https://github.com/Visibilityltd/Visibility.AspNetCore.DataProtection.DistributedCache](https://github.com/Visibilityltd/Visibility.AspNetCore.DataProtection.DistributedCache)
