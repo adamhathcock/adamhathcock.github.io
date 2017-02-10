@@ -3,5 +3,5 @@ markdown: kramdown
 url: http://adamhathcock.github.io
 title: Adam Hathcock
 tagline: Moved to https://adamhathcock.blog
-description: https://adamhathcock.blog
+description: [https://adamhathcock.blog](https://adamhathcock.blog)
 paginate: 5
